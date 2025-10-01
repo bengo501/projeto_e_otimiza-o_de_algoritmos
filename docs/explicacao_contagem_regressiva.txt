@@ -1,0 +1,80 @@
+Contagem regressiva — Explicação direta de como resolver
+
+Objetivo
+--------
+Dado um inteiro positivo n, reduzir n até 1 usando o menor número de operações entre:
+  • -1
+  • /2 (se n for divisível por 2)
+  • /3 (se n for divisível por 3)
+Opcional: imprimir também uma sequência ótima de operações.
+
+Modelagem
+---------
+Defina f(n) como o número mínimo de operações para chegar a 1.
+Relação de recorrência:
+  f(1) = 0
+  f(n) = 1 + min( f(n-1),
+                  f(n/2) se n % 2 == 0,
+                  f(n/3) se n % 3 == 0 )
+
+Versão 1 — Recursiva simples (baseline)
+---------------------------------------
+Implemente a recorrência literalmente. Serve para validar a lógica em n pequenos.
+Custo explode (muitas recomputações).
+
+Versão 2 — Recursiva com memoização (top-down DP)
+--------------------------------------------------
+Use um dicionário/array M. Antes de calcular f(n), verifique se M[n] já existe.
+Se existir, retorne; se não, compute pela recorrência, salve em M[n] e retorne.
+Tempo O(n) e espaço O(n) (n estados distintos visitados até atingir 1).
+
+Versão 3 — Não-recursiva (bottom-up ou BFS)
+-------------------------------------------
+A) DP bottom-up:
+   dp[1] = 0
+   para x em 2..n:
+       dp[x] = 1 + dp[x-1]
+       se x % 2 == 0: dp[x] = min(dp[x], 1 + dp[x//2])
+       se x % 3 == 0: dp[x] = min(dp[x], 1 + dp[x//3])
+   resposta = dp[n]
+
+B) BFS:
+   Considere um grafo onde cada x (>=1) tem arestas para x-1, x/2 e x/3 quando válidas.
+   Rode BFS a partir de n até visitar 1; por ser grafo não ponderado, BFS acha o caminho mínimo.
+
+Como imprimir a sequência ótima (bônus)
+---------------------------------------
+Enquanto preenche dp[x], guarde também:
+  prev[x] = estado anterior que melhorou dp[x]
+  op[x]   = operação usada para sair de prev[x] e chegar a x
+Depois, comece em x=n e caminhe prev[x] até 1, registrando op[x] a cada passo.
+Inverta a lista no final para imprimir na ordem correta (ex.: "/2 /2 /3 -1 ...").
+
+Complexidades
+-------------
+• Recursiva simples: exponencial (apenas para testar).
+• Recursiva com memo: O(n) tempo / O(n) espaço.
+• Bottom-up DP: O(n) tempo / O(n) espaço.
+• BFS: O(n) nós e arestas visitados no pior caso — O(n) tempo / O(n) espaço.
+
+Interface por linha de comando (sugestão)
+-----------------------------------------
+downto1 <n> [--method rec|memo|dp|bfs] [--path]
+Exemplos:
+  downto1 780 --method dp
+  downto1 780 --method dp --path
+Saída esperada (n=780):
+  Passos mínimos: 10
+  Operações: /2 /2 /3 -1 -1 /3 /3 -1 /2 /3
+
+Validações
+----------
+• n=1 → 0 passos; caminho vazio (se pedido).
+• n ≤ 0 → erro de entrada.
+• Se imprimir o caminho, valide aplicando as operações: o resultado deve ser 1.
+
+Observação prática
+------------------
+A versão DP bottom-up cumpre todos os requisitos de forma simples e robusta.
+A versão com memo é ótima para explicar a relação recursiva e manter desempenho.
+BFS é uma alternativa elegante que devolve o caminho mínimo naturalmente.

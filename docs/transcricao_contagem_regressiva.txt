@@ -1,0 +1,34 @@
+Contagem regressiva
+
+Seu problema de hoje envolve auxiliar seus colegas da NASA, que estão com um problema sério:
+o computador que faz a contagem regressiva para os lançamentos está com dificuldades, pois
+ele perdeu várias de suas operações depois que o pessoal da limpeza deixou cair um esfregão
+molhado dentro dele. Agora ele só consegue fazer estas operações
+
+• Decremento de uma unidade;
+
+• Divisão por 2 (somente quando o número pode ser dividido sem deixar resto)
+
+• Divisão por 3 (somente quando o número pode ser dividido sem deixar resto)
+
+Sua missão é auxiliar a NASA a diagnosticar o problema, desenvolvendo um programa que
+receba um inteiro n e determine o menor número de operações que precisam ser feitas para
+chegar no resultado 1. Você quer impressionar a NASA, afinal se fizer um serviço bem feito
+pode até ganhar uma camiseta! E resolve fazer três versões de programa:
+
+1. Uma versão recursiva bem simples para fornecer resultados iniciais;
+
+2. Uma versão recursiva com memorização, pois você sabe que eles vão usar números grandes;
+
+3. Uma versão não-recursiva, pois o computador pode ter perdido sua capacidade de fazer
+   recursão também.
+
+Como bônus, você resolve adaptar um dos programas para apresentar também quais são as
+operações que devem ser usadas sobre o número n para reduzi-lo a 1. Por exemplo, para 780
+poderíamos ter
+
+10 operações: /2   /2   /3   -1   -1   /3   /3   -1   /2   /3 .
+
+Perceba que podem existir várias formas de chegar a 1, todas com o menor tamanho possível.
+
+Faça seu programa receber os argumentos pela linha de comando!
