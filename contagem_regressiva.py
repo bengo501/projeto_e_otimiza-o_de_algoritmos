@@ -1,45 +1,10 @@
 #!/usr/bin/env python3
-"""
-contagem regressiva - nasa
-programa para determinar o menor numero de operacoes para reduzir n ate 1
-usando operacoes: -1, /2 (se divisivel), /3 (se divisivel)
-
-o problema consiste em encontrar o menor numero de operacoes para reduzir
-um numero inteiro positivo n ate 1, usando apenas tres operacoes:
-- decremento de uma unidade (-1)
-- divisao por 2 (/2) - apenas quando n e divisivel por 2
-- divisao por 3 (/3) - apenas quando n e divisivel por 3
-
-o programa implementa quatro metodos diferentes para resolver o problema:
-1. recursao simples (apenas para validacao em numeros pequenos)
-2. recursao com memoizacao (evita recomputacoes)
-3. programacao dinamica bottom-up (metodo recomendado)
-4. busca em largura bfs (alternativa elegante)
-"""
-
 import sys
 import argparse
 from typing import Dict, List, Tuple, Optional
 
 
 def contagem_recursiva_simples(n: int) -> int:
-    """
-    versao 1: recursiva simples (baseline)
-    implementa a recorrencia literalmente para validar a logica.
-    
-    esta funcao e uma implementacao direta da recorrencia:
-    f(1) = 0
-    f(n) = 1 + min(f(n-1), f(n/2) se n%2==0, f(n/3) se n%3==0)
-    
-    complexidade: exponencial o(3^n) - muito lenta para numeros grandes
-    uso: apenas para validacao em numeros pequenos (n <= 20)
-    
-    parametros:
-        n (int): numero inteiro positivo a ser reduzido ate 1
-    
-    retorna:
-        int: numero minimo de operacoes necessarias
-    """
     # caso base: se ja chegamos a 1, nao precisamos de mais operacoes
     if n == 1:
         return 0
@@ -65,24 +30,6 @@ def contagem_recursiva_simples(n: int) -> int:
 
 
 def contagem_com_memoizacao(n: int, memo: Optional[Dict[int, int]] = None) -> int:
-    """
-    versao 2: recursiva com memoizacao (top-down dp)
-    usa um dicionario para evitar recomputacoes desnecessarias.
-    
-    esta funcao implementa a mesma logica da versao recursiva simples,
-    mas com uma otimizacao importante: armazena os resultados ja calculados
-    em um dicionario (memo) para evitar recalcular os mesmos valores.
-    
-    complexidade: o(n) tempo e o(n) espaco
-    vantagem: mantem a simplicidade da recursao mas com performance otimizada
-    
-    parametros:
-        n (int): numero inteiro positivo a ser reduzido ate 1
-        memo (dict): dicionario para armazenar resultados ja calculados
-    
-    retorna:
-        int: numero minimo de operacoes necessarias
-    """
     # inicializar o dicionario de memoizacao se nao foi fornecido
     if memo is None:
         memo = {}
@@ -119,23 +66,6 @@ def contagem_com_memoizacao(n: int, memo: Optional[Dict[int, int]] = None) -> in
 
 
 def contagem_bottom_up(n: int) -> Tuple[int, Optional[List[str]]]:
-    """
-    versao 3: nao-recursiva (bottom-up dp)
-    constroi a solucao de baixo para cima usando programacao dinamica.
-    
-    esta funcao implementa a abordagem bottom-up da programacao dinamica,
-    calculando os valores menores primeiro e usando-os para calcular os maiores.
-    tambem constroi a sequencia otima de operacoes para chegar ao resultado.
-    
-    complexidade: o(n) tempo e o(n) espaco
-    vantagem: nao usa recursao, evita problemas de stack overflow
-    
-    parametros:
-        n (int): numero inteiro positivo a ser reduzido ate 1
-    
-    retorna:
-        tuple: (numero minimo de operacoes, sequencia otima de operacoes)
-    """
     # caso especial: se n ja e 1, nao precisamos de operacoes
     if n == 1:
         return 0, []
@@ -191,23 +121,6 @@ def contagem_bottom_up(n: int) -> Tuple[int, Optional[List[str]]]:
 
 
 def contagem_bfs(n: int) -> Tuple[int, List[str]]:
-    """
-    versao alternativa: bfs (busca em largura)
-    modela o problema como um grafo e usa bfs para encontrar o caminho minimo.
-    
-    esta funcao implementa uma abordagem diferente ao problema, modelando-o
-    como um grafo onde cada numero e um no e as operacoes sao arestas.
-    usa busca em largura (bfs) para encontrar o caminho mais curto de n ate 1.
-    
-    complexidade: o(n) tempo e o(n) espaco
-    vantagem: encontra naturalmente o caminho minimo, implementacao elegante
-    
-    parametros:
-        n (int): numero inteiro positivo a ser reduzido ate 1
-    
-    retorna:
-        tuple: (numero minimo de operacoes, sequencia de operacoes)
-    """
     # caso especial: se n ja e 1, nao precisamos de operacoes
     if n == 1:
         return 0, []
@@ -260,20 +173,6 @@ def contagem_bfs(n: int) -> Tuple[int, List[str]]:
 
 
 def validar_sequencia(n: int, sequencia: List[str]) -> bool:
-    """
-    valida se uma sequencia de operacoes realmente leva de n ate 1.
-    
-    esta funcao simula a aplicacao das operacoes da sequencia sobre o valor n
-    e verifica se o resultado final e realmente 1. tambem valida se as
-    operacoes de divisao sao aplicadas apenas quando o valor e divisivel.
-    
-    parametros:
-        n (int): valor inicial
-        sequencia (list): lista de operacoes a serem aplicadas
-    
-    retorna:
-        bool: true se a sequencia e valida, false caso contrario
-    """
     # comeca com o valor inicial n
     valor = n
     
@@ -300,12 +199,11 @@ def validar_sequencia(n: int, sequencia: List[str]) -> bool:
 
 
 def main():
-    """
-    funcao principal que implementa a interface de linha de comando.
+    #funcao principal que implementa a interface de linha de comando.
     
-    processa os argumentos da linha de comando, valida a entrada,
-    executa o metodo escolhido e exibe os resultados.
-    """
+    #processa os argumentos da linha de comando, valida a entrada,
+    #executa o metodo escolhido e exibe os resultados.
+    
     # configura o parser de argumentos da linha de comando
     parser = argparse.ArgumentParser(
         description='contagem regressiva nasa - encontra o menor numero de operacoes para reduzir n ate 1'
